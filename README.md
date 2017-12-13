@@ -1,7 +1,14 @@
 kubecron
 ========
 
-A small utility to do things not currently possible with kubectl. For example running cronjobs immediately for testing purposes.
+A small utility to do things not currently possible with kubectl. 
+At the moment the following commands are implemented:
+- run
+    - Running CronJobs immediately for testing purposes.
+- suspend
+    - Suspend a CronJob
+- unsuspend
+    - Unsuspend a CronJob
 
 **Installation**
 
