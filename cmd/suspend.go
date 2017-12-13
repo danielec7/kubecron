@@ -1,9 +1,9 @@
 package cmd
 
 import (
+	"fmt"
 	"github.com/spf13/cobra"
 	"k8s.io/client-go/util/retry"
-	"fmt"
 )
 
 var suspendCmd = &cobra.Command{

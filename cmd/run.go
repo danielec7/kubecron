@@ -7,9 +7,9 @@ import (
 
 	"github.com/spf13/cobra"
 	batchv1 "k8s.io/api/batch/v1"
+	"k8s.io/api/batch/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/api/batch/v1beta1"
 )
 
 var runCmd = &cobra.Command{
