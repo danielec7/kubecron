@@ -1,0 +1,15 @@
+project_name: kubecron
+release:
+  draft: false
+builds:
+- goos:
+  - linux
+  - darwin
+  - windows
+  goarch:
+  - amd64
+  env:
+    - CGO_ENABLED=0
+  ldflags: -s -w -extldflags "-static"
+  flags: -tags netgo -installsuffix netgo
+  binary: kubecron
