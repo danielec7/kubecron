@@ -12,7 +12,7 @@ At the moment the following commands are implemented:
 
 **Installation**
 
-No releases yet. Use:
+Download a release or
 
 ```bash
 go get github.com/iJanki/kubecron
