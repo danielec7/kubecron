@@ -1,9 +1,11 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/spf13/cobra"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/util/retry"
 )
 
@@ -12,6 +14,7 @@ var suspendCmd = &cobra.Command{
 	Short: "Suspend a cronjob",
 	Long:  "Suspend a cronjob",
 	Run:   suspend,
+	Args:  cobra.MinimumNArgs(1),
 }
 
 var unSuspendCmd = &cobra.Command{
@@ -19,6 +22,7 @@ var unSuspendCmd = &cobra.Command{
 	Short: "Unsuspend a cronjob",
 	Long:  "Unsuspend a cronjob",
 	Run:   unsuspend,
+	Args:  cobra.MinimumNArgs(1),
 }
 
 func suspend(_ *cobra.Command, args []string) {
@@ -40,7 +44,7 @@ func toggleSuspend(args []string, status bool) {
 		cronjob := getCronjob(namespace, cronjobName)
 
 		cronjob.Spec.Suspend = &status
-		_, updateErr := clientset.BatchV1beta1().CronJobs(namespace).Update(cronjob)
+		_, updateErr := clientset.BatchV1beta1().CronJobs(namespace).Update(context.TODO(), cronjob, metav1.UpdateOptions{})
 		return updateErr
 	})
 
