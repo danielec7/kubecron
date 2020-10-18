@@ -30,6 +30,20 @@ It also accepts context and namespace flags as kubectl
 kubecron --context=default-cluster -n default run cronjobname
 ```
 
+**Usage as kubectl pluginn**
+
+Rename the kubecron executable into kubectl-cron and place it
+in your $PATH
+
+```bash
+mv kubecron /usr/local/bin/kubectl-cron
+```
+
+Run it like this:
+```bash
+kubectl cron run cronjobname
+```
+
 License
 -------
 
