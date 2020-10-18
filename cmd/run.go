@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"strconv"
 	"time"
@@ -17,10 +18,10 @@ var runCmd = &cobra.Command{
 	Short: "Run a cronjob immediately",
 	Long:  "Run a cronjob immediately",
 	Run:   run,
+	Args:  cobra.MinimumNArgs(1),
 }
 
 func run(_ *cobra.Command, args []string) {
-
 	cronjobName := args[0]
 
 	clientset := mustGetClientset()
@@ -37,13 +38,12 @@ func createJob(clientset *kubernetes.Clientset, cronjobName string, cronjob *v1b
 
 	job := &batchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      cronjobName + suffix,
-			Namespace: namespace,
+			Name: cronjobName + suffix,
 		},
 		Spec: cronjob.Spec.JobTemplate.Spec,
 	}
 
-	result, err := jobsClient.Create(job)
+	result, err := jobsClient.Create(context.TODO(), job, metav1.CreateOptions{})
 	if err != nil {
 		panic(err)
 	}

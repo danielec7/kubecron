@@ -1,2 +1,5 @@
 /.idea/
 /dist
+kubecron
+/vendor/
+
