@@ -30,3 +30,9 @@ else
 	@echo "Creating Cluster"
 	kind create cluster --name ${KIND_CLUSTER_NAME} --image=kindest/node:${K8S_NODE_IMAGE}
 endif
+
+release-check:
+	@goreleaser check
+
+release-local: release-check
+	@goreleaser release --snapshot --clean
