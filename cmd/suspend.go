@@ -44,7 +44,7 @@ func toggleSuspend(args []string, status bool) {
 		cronjob := getCronjob(namespace, cronjobName)
 
 		cronjob.Spec.Suspend = &status
-		_, updateErr := clientset.BatchV1beta1().CronJobs(namespace).Update(context.TODO(), cronjob, metav1.UpdateOptions{})
+		_, updateErr := clientset.BatchV1().CronJobs(namespace).Update(context.TODO(), cronjob, metav1.UpdateOptions{})
 		return updateErr
 	})
 

@@ -3,11 +3,11 @@ package cmd
 import (
 	"context"
 	"fmt"
+	batchv1 "k8s.io/api/batch/v1"
 	"os"
 	"path/filepath"
 
 	"github.com/spf13/cobra"
-	"k8s.io/api/batch/v1beta1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -32,9 +32,9 @@ func Execute() {
 }
 
 func init() {
-	//		flags.StringVarP(f.Namespace, flagNamespace, "n", *f.Namespace, "If present, the namespace scope for this CLI request")
 	rootCmd.PersistentFlags().StringVarP(&namespace, "namespace", "n", "", "If present, the namespace scope for this CLI request")
 	rootCmd.PersistentFlags().StringVar(&kubecontext, "context", "", "Context")
+
 	if home := homedir.HomeDir(); home != "" {
 		rootCmd.PersistentFlags().StringVar(&kubeconfig, "kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
 	} else {
@@ -86,11 +86,10 @@ func getConfig(kubecontext, kubeconfigPath string) (*rest.Config, error) {
 	return a.ClientConfig()
 }
 
-func getCronjob(namespace, cronjob string) *v1beta1.CronJob {
-
+func getCronjob(namespace, cronjob string) *batchv1.CronJob {
 	clientset := mustGetClientset()
 
-	cj, err := clientset.BatchV1beta1().CronJobs(namespace).Get(context.TODO(), cronjob, metav1.GetOptions{})
+	cj, err := clientset.BatchV1().CronJobs(namespace).Get(context.TODO(), cronjob, metav1.GetOptions{})
 
 	if errors.IsNotFound(err) {
 		fmt.Printf("Cronjob not found\n")
