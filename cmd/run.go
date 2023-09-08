@@ -8,7 +8,6 @@ import (
 
 	"github.com/spf13/cobra"
 	batchv1 "k8s.io/api/batch/v1"
-	"k8s.io/api/batch/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
@@ -31,7 +30,7 @@ func run(_ *cobra.Command, args []string) {
 	createJob(clientset, cronjobName, cronjob)
 }
 
-func createJob(clientset *kubernetes.Clientset, cronjobName string, cronjob *v1beta1.CronJob) {
+func createJob(clientset *kubernetes.Clientset, cronjobName string, cronjob *batchv1.CronJob) {
 	jobsClient := clientset.BatchV1().Jobs(namespace)
 
 	suffix := "-" + strconv.Itoa(int(time.Now().Unix()))
